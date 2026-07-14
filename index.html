@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- ==========================================================================
+       SEO — TÍTULO Y DESCRIPCIÓN
+       ==========================================================================
+       Cambia el texto entre comillas de "content" (y el texto entre
+       <title>...</title>) por tu descripción real.
+       Esto es lo que Google muestra en los resultados de búsqueda.
+  ========================================================================== -->
+  <title>Preparación de Oposiciones de Física y Química en Galicia | Academia Premir</title>
+  <meta name="description" content="Preparación de oposiciones de Física y Química en Galicia: problemas, temas, unidades didácticas y programación. Clases presenciales, online y en diferido desde la Academia Premir (Lugo)." />
+  <meta name="author" content="J. Higinio" />
+  <meta name="robots" content="index, follow" />
+
+  <!-- ==========================================================================
+       OPEN GRAPH — Vista previa al compartir el enlace en WhatsApp, Facebook,
+       LinkedIn, Twitter/X, etc.
+       ==========================================================================
+       - "og:title" y "og:description": cambia el texto por el tuyo.
+       - "og:image": debe apuntar a una imagen de 1200x630 px. Ahora mismo
+         apunta a un SVG de ejemplo (assets/images/og-image.svg). Para que
+         se vea bien en TODAS las redes sociales (algunas no admiten SVG),
+         sustitúyelo por una imagen JPG o PNG real de 1200x630 px y cambia
+         la ruta de abajo, por ejemplo a "assets/images/og-image.jpg".
+       - "og:url": pon aquí la URL final de tu web una vez la despliegues en
+         Vercel (ej. https://tu-proyecto.vercel.app/).
+  ========================================================================== -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Preparación de Oposiciones de Física y Química en Galicia | Academia Premir" />
+  <meta property="og:description" content="Problemas, temas, unidades didácticas y programación con seguimiento totalmente personalizado. Presencial, online y en diferido." />
+  <meta property="og:image" content="assets/images/og-image.svg" />
+  <meta property="og:url" content="https://tu-proyecto.vercel.app/" />
+  <meta property="og:locale" content="es_ES" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- ==========================================================================
+       FAVICON — icono que aparece en la pestaña del navegador.
+       Sustituye assets/images/favicon.svg por tu propio icono/logo (puedes
+       exportar un SVG o PNG desde Canva, Figma, etc. con el mismo nombre).
+  ========================================================================== -->
+  <link rel="icon" type="image/svg+xml" href="assets/images/favicon.svg" />
+
+  <!-- Tipografía (Google Fonts). Si prefieres no cargar fuentes externas,
+       elimina esta línea y la web usará la fuente por defecto del sistema. -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/styles.css" />
+</head>
+<body>
+
+  <!-- ============================== CABECERA / MENÚ ============================== -->
+  <header class="header" id="header">
+    <div class="container header__inner">
+      <a href="#hero" class="logo" id="logo-text">Nombre</a>
+
+      <nav class="nav" id="nav">
+        <ul class="nav__list">
+          <li><a href="#sobre-mi" class="nav__link">Sobre mí</a></li>
+          <li><a href="#preparacion" class="nav__link">Preparación</a></li>
+          <li><a href="#modalidades" class="nav__link">Modalidades</a></li>
+          <li><a href="#por-que-elegirme" class="nav__link">Por qué elegirme</a></li>
+          <li><a href="#faq" class="nav__link">FAQ</a></li>
+          <li><a href="#contacto" class="nav__link nav__cta">Contacto</a></li>
+        </ul>
+      </nav>
+
+      <button class="nav-toggle" id="nav-toggle" aria-label="Abrir menú" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ============================== 1. HERO ============================== -->
+    <section id="hero" class="hero">
+      <div class="container hero__inner">
+        <h1 id="hero-titulo" class="hero__nombre"></h1>
+        <p id="hero-subtitulo" class="hero__profesion"></p>
+        <p id="hero-descripcion" class="hero__frase"></p>
+        <p id="hero-credenciales" class="hero__credenciales"></p>
+        <div class="hero__botones">
+          <a href="#contacto" id="hero-boton-principal" class="btn btn--primary"></a>
+          <a href="#" id="hero-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener"></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 2. SOBRE MÍ ============================== -->
+    <section id="sobre-mi" class="about">
+      <div class="container about__inner">
+        <div class="about__foto">
+          <img id="about-foto" src="" alt="Foto de perfil" />
+        </div>
+        <div class="about__contenido">
+          <h2 class="section-title">Sobre mí</h2>
+          <h3 id="about-nombre" class="about__nombre"></h3>
+          <div id="about-texto" class="about__texto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================== 3. QUÉ ENCONTRARÁS EN LA PREPARACIÓN ============================== -->
+    <section id="preparacion" class="preparation">
+      <div class="container">
+        <h2 class="section-title section-title--center">¿Qué encontrarás en la preparación?</h2>
+        <p class="section-subtitle">Haz clic en cada bloque para ver el detalle</p>
+        <div id="preparation-list" class="preparation__list"></div>
+      </div>
+    </section>
+
+    <!-- ============================== 4. CÓMO SON LAS CLASES ============================== -->
+    <section id="como-son-las-clases" class="classes-info">
+      <div class="container classes-info__inner">
+        <h2 id="classes-info-titulo" class="section-title section-title--center"></h2>
+        <div id="classes-info-texto" class="classes-info__texto"></div>
+      </div>
+    </section>
+
+    <!-- ============================== 5. MODALIDADES ============================== -->
+    <section id="modalidades" class="modalities">
+      <div class="container">
+        <h2 id="modalities-titulo" class="section-title section-title--center"></h2>
+        <p id="modalities-intro" class="section-subtitle"></p>
+        <div id="modalities-list" class="modalities__grid"></div>
+        <p id="modalities-nota" class="modalities__nota"></p>
+      </div>
+    </section>
+
+    <!-- ============================== 6. POR QUÉ ELEGIRME ============================== -->
+    <section id="por-que-elegirme" class="why">
+      <div class="container">
+        <h2 class="section-title section-title--center">¿Por qué elegirme?</h2>
+        <ul id="why-list" class="why__checklist"></ul>
+        <p id="why-logro" class="why__logro"></p>
+      </div>
+    </section>
+
+    <!-- ============================== 7. FAQ ============================== -->
+    <section id="faq" class="faq">
+      <div class="container">
+        <h2 class="section-title section-title--center">Preguntas frecuentes</h2>
+        <div id="faq-list" class="faq__list"></div>
+      </div>
+    </section>
+
+    <!-- ============================== 8. CONTACTO ============================== -->
+    <section id="contacto" class="contact">
+      <div class="container contact__inner">
+        <img id="contact-logo" class="contact__logo" src="" alt="" />
+        <h2 class="section-title section-title--center">Solicita información</h2>
+        <p id="contact-academia" class="contact__intro"></p>
+        <ul class="contact__list" id="contact-list"></ul>
+        <div class="contact__horario">
+          <h3 class="contact__horario-titulo">Horario</h3>
+          <ul id="contact-horario" class="contact__horario-lista"></ul>
+        </div>
+        <div class="contact__botones">
+          <a href="#" id="contact-boton-email" class="btn btn--primary"></a>
+          <a href="#" id="contact-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener"></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================== FOOTER ============================== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p id="footer-nombre" class="footer__nombre"></p>
+      <ul class="footer__social" id="footer-social"></ul>
+      <p id="footer-copy" class="footer__copy"></p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
