@@ -8,6 +8,8 @@
    1. Lee la información de "siteData" (definida en data.js).
    2. Rellena el HTML de cada sección con esa información.
    3. Gestiona el menú móvil, el acordeón y el scroll suave.
+   4. Registra en Google Analytics un evento "whatsapp_click" cada vez que
+      se pulsa alguno de los botones/enlaces de WhatsApp de la web.
    ========================================================================== */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -26,6 +28,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
   configurarMenuMovil();
 });
+
+/* ==========================================================================
+   GOOGLE ANALYTICS — evento "whatsapp_click"
+   ==========================================================================
+   Registra un evento cada vez que se pulsa un botón/enlace de WhatsApp.
+   "origen" identifica desde qué punto de la web se ha pulsado (Hero,
+   ContactoInfo, ContactoBoton, etc.) y se envía como "event_label".
+   ========================================================================== */
+function registrarClicWhatsapp(origen) {
+  if (typeof gtag === "function") {
+    gtag("event", "whatsapp_click", { event_label: origen });
+  }
+}
 
 /* ============================== COLORES ============================== */
 function aplicarColores(colores) {
@@ -51,6 +66,7 @@ function renderizarHero(hero, contacto) {
   const botonWhatsapp = document.getElementById("hero-boton-whatsapp");
   botonWhatsapp.textContent = hero.botonSecundario;
   botonWhatsapp.href = `https://wa.me/${contacto.whatsapp}`;
+  botonWhatsapp.addEventListener("click", () => registrarClicWhatsapp("Hero"));
 }
 
 /* ============================== SOBRE MÍ ============================== */
@@ -169,9 +185,10 @@ function renderizarContacto(contacto) {
     `<li>📍 ${contacto.direccion}</li>`,
     `<li>✉️ <a href="mailto:${contacto.email}">${contacto.email}</a></li>`,
     `<li>☎️ <a href="tel:${contacto.telefono.replace(/\s/g, "")}">${contacto.telefono}</a></li>`,
-    `<li>💬 <a href="https://wa.me/${contacto.whatsapp}" target="_blank" rel="noopener">WhatsApp</a></li>`,
+    `<li>💬 <a href="https://wa.me/${contacto.whatsapp}" target="_blank" rel="noopener" id="contact-whatsapp-link">WhatsApp</a></li>`,
   ];
   document.getElementById("contact-list").innerHTML = items.join("");
+  document.getElementById("contact-whatsapp-link").addEventListener("click", () => registrarClicWhatsapp("ContactoInfo"));
 
   document.getElementById("contact-horario").innerHTML = contacto.horario
     .map((linea) => `<li>${linea}</li>`)
@@ -184,6 +201,7 @@ function renderizarContacto(contacto) {
   const botonWhatsapp = document.getElementById("contact-boton-whatsapp");
   botonWhatsapp.textContent = "Escribir por WhatsApp";
   botonWhatsapp.href = `https://wa.me/${contacto.whatsapp}`;
+  botonWhatsapp.addEventListener("click", () => registrarClicWhatsapp("ContactoBoton"));
 }
 
 /* ============================== FOOTER ============================== */
