@@ -10,7 +10,14 @@
    3. Gestiona el menú móvil, el acordeón y el scroll suave.
    4. Registra en Google Analytics un evento "whatsapp_click" cada vez que
       se pulsa alguno de los botones/enlaces de WhatsApp de la web.
+   5. Genera los datos estructurados Schema.org (LocalBusiness y FAQPage)
+      a partir de la misma información de data.js, para no duplicar textos.
    ========================================================================== */
+
+// URL PÚBLICA DEL SITIO — se usa para los datos estructurados (Schema.org).
+// Si cambias de dominio, actualiza esta constante Y las etiquetas
+// "canonical" / "og:url" / "twitter:url" de index.html (mismo valor en las 4).
+const URL_SITIO = "https://jh-fyq.vercel.app";
 
 document.addEventListener("DOMContentLoaded", () => {
   aplicarColores(siteData.colores);
@@ -23,11 +30,150 @@ document.addEventListener("DOMContentLoaded", () => {
   renderizarFaq(siteData.faq);
   renderizarContacto(siteData.contacto);
   renderizarFooter(siteData.personal, siteData.contacto);
+  inyectarDatosEstructurados(siteData);
 
   document.title = siteData.seo.tituloPestana;
 
   configurarMenuMovil();
 });
+
+/* ==========================================================================
+   DATOS ESTRUCTURADOS (Schema.org / JSON-LD)
+   ==========================================================================
+   Se generan en JavaScript a partir de "siteData" para no duplicar textos
+   que ya existen en data.js (nombre, dirección, teléfono, horario, FAQ...).
+   Google admite perfectamente JSON-LD insertado por JavaScript.
+
+   MODELO ELEGIDO (importante para futuras ediciones):
+   Esta web es tu web personal como preparador, NO la web oficial de la
+   academia. Por eso la entidad principal es un "Person" (tú), el servicio
+   que ofreces se modela como "Service", y la Academia Premir aparece como
+   una organización asociada ("EducationalOrganization"/"LocalBusiness")
+   ligada a ti mediante "worksFor" y al servicio mediante "location" — pero
+   nunca como sujeto principal del schema. Si en el futuro cambias de
+   academia o trabajas de forma independiente, basta con editar/quitar el
+   nodo "academia" de aquí abajo: tu "Person" y tu "Service" no dependen de él.
+   ========================================================================== */
+function inyectarDatosEstructurados(siteData) {
+  const { personal, contacto, hero, sobreMi, faq } = siteData;
+  const idPersona = `${URL_SITIO}/#persona`;
+  const idAcademia = `${URL_SITIO}/#academia`;
+  const idServicio = `${URL_SITIO}/#servicio`;
+
+  const urlFoto = personal.fotoPerfil ? `${URL_SITIO}/${personal.fotoPerfil}` : undefined;
+  const urlLogo = contacto.logo ? `${URL_SITIO}/${contacto.logo}` : undefined;
+
+  // Separa "Rúa do Conde 46, 27003 Lugo" en calle / código postal / ciudad.
+  // Si el formato de "contacto.direccion" cambiara y no encajase con el
+  // patrón "calle, CP ciudad", se usa la dirección completa como fallback.
+  const coincidenciaDireccion = contacto.direccion.match(/^(.*),\s*(\d{5})\s+(.*)$/);
+  const direccionPostal = coincidenciaDireccion
+    ? {
+        streetAddress: coincidenciaDireccion[1].trim(),
+        postalCode: coincidenciaDireccion[2],
+        addressLocality: coincidenciaDireccion[3].trim(),
+      }
+    : { streetAddress: contacto.direccion };
+
+  // Enlaces a perfiles externos (LinkedIn/GitHub), solo si están rellenos.
+  const sameAs = [contacto.linkedin, contacto.github].filter(Boolean);
+
+  // "email" y "telephone" NO van aquí a propósito: son datos de contacto de
+  // la Academia Premir, no de la persona, y ya están en el nodo "academia"
+  // de más abajo (evita duplicar/atribuir mal el mismo contacto a los dos).
+  const persona = {
+    "@type": "Person",
+    "@id": idPersona,
+    name: personal.nombre,
+    jobTitle: "Preparador de oposiciones de Física y Química",
+    description: sobreMi.parrafos.join(" "),
+    url: `${URL_SITIO}/`,
+    ...(urlFoto ? { image: urlFoto } : {}),
+    ...(sameAs.length ? { sameAs } : {}),
+    worksFor: { "@id": idAcademia },
+  };
+
+  // Academia: organización asociada (dónde/con quién impartes las clases
+  // presenciales), NO la entidad principal de la página.
+  const academia = {
+    "@type": ["EducationalOrganization", "LocalBusiness"],
+    "@id": idAcademia,
+    name: contacto.academia,
+    url: `${URL_SITIO}/`,
+    ...(urlLogo ? { image: urlLogo, logo: urlLogo } : {}),
+    telephone: contacto.telefono,
+    email: contacto.email,
+    address: {
+      "@type": "PostalAddress",
+      ...direccionPostal,
+      addressRegion: "Galicia",
+      addressCountry: "ES",
+    },
+    ...(contacto.mapaLat && contacto.mapaLng
+      ? {
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: contacto.mapaLat,
+            longitude: contacto.mapaLng,
+          },
+        }
+      : {}),
+    ...(contacto.googleMapsUrl ? { hasMap: contacto.googleMapsUrl } : {}),
+    // Horario actual: lunes a viernes, 11:00-13:00 y 16:00-20:00.
+    // Si cambias "contacto.horario" en data.js, actualiza también estos
+    // horarios estructurados para que coincidan (Schema.org necesita el
+    // horario en un formato de días/horas concreto, no como texto libre).
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "11:00",
+        closes: "13:00",
+      },
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "16:00",
+        closes: "20:00",
+      },
+    ],
+  };
+
+  // El servicio que ofreces: lo prestas tú ("provider"), en la ubicación
+  // de la academia ("location"), en el área geográfica de Galicia.
+  const servicio = {
+    "@type": "Service",
+    "@id": idServicio,
+    name: hero.titulo,
+    description: hero.descripcion,
+    serviceType: "Preparación de oposiciones",
+    areaServed: "Galicia",
+    provider: { "@id": idPersona },
+    location: { "@id": idAcademia },
+  };
+
+  const preguntasFrecuentes = {
+    "@type": "FAQPage",
+    mainEntity: faq.map((item) => ({
+      "@type": "Question",
+      name: item.pregunta,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.respuesta,
+      },
+    })),
+  };
+
+  const datosEstructurados = {
+    "@context": "https://schema.org",
+    "@graph": [persona, academia, servicio, preguntasFrecuentes],
+  };
+
+  const script = document.createElement("script");
+  script.type = "application/ld+json";
+  script.textContent = JSON.stringify(datosEstructurados);
+  document.head.appendChild(script);
+}
 
 /* ==========================================================================
    GOOGLE ANALYTICS — evento "whatsapp_click"
@@ -73,7 +219,7 @@ function renderizarHero(hero, contacto) {
 function renderizarSobreMi(personal, sobreMi) {
   const foto = document.getElementById("about-foto");
   foto.src = personal.fotoPerfil;
-  foto.alt = `Foto de perfil de ${personal.nombre}`;
+  foto.alt = `${personal.nombre}, profesor preparador de oposiciones de Física y Química`;
 
   document.getElementById("about-nombre").textContent = personal.nombre;
 
@@ -174,18 +320,48 @@ function renderizarContacto(contacto) {
   const logo = document.getElementById("contact-logo");
   if (contacto.logo) {
     logo.src = contacto.logo;
-    logo.alt = contacto.academia;
+    logo.alt = `Logotipo de ${contacto.academia}`;
   } else {
     logo.style.display = "none";
   }
 
   document.getElementById("contact-academia").textContent = `La preparación se realiza desde la ${contacto.academia}.`;
 
+  const direccionHTML = contacto.googleMapsUrl
+    ? `<a href="${contacto.googleMapsUrl}" target="_blank" rel="noopener noreferrer">${contacto.direccion}</a>`
+    : contacto.direccion;
+
+  // Mapa pequeño y responsive, embebido sin necesidad de clave de API de
+  // Google. Todo el bloque es un único enlace que abre la ficha oficial de
+  // Google Maps en una pestaña nueva al pulsarlo (el iframe es solo visual,
+  // "pointer-events: none" en el CSS deja pasar el clic al enlace).
+  const mapaHTML =
+    contacto.googleMapsUrl && contacto.mapaLat && contacto.mapaLng
+      ? `
+      <a
+        class="contact__map"
+        href="${contacto.googleMapsUrl}"
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Abrir la ubicación de ${contacto.academia} en Google Maps"
+      >
+        <iframe
+          src="https://www.google.com/maps?q=${contacto.mapaLat},${contacto.mapaLng}&z=16&output=embed"
+          title="Mapa de ubicación de ${contacto.academia}"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+          tabindex="-1"
+          aria-hidden="true"
+        ></iframe>
+        <span class="contact__map-label">Abrir en Google Maps</span>
+      </a>`
+      : "";
+
   const items = [
-    `<li>📍 ${contacto.direccion}</li>`,
+    `<li class="contact__list-item--direccion">📍 ${direccionHTML}${mapaHTML}</li>`,
     `<li>✉️ <a href="mailto:${contacto.email}">${contacto.email}</a></li>`,
     `<li>☎️ <a href="tel:${contacto.telefono.replace(/\s/g, "")}">${contacto.telefono}</a></li>`,
-    `<li>💬 <a href="https://wa.me/${contacto.whatsapp}" target="_blank" rel="noopener" id="contact-whatsapp-link">WhatsApp</a></li>`,
+    `<li>💬 <a href="https://wa.me/${contacto.whatsapp}" target="_blank" rel="noopener noreferrer" id="contact-whatsapp-link">WhatsApp</a></li>`,
   ];
   document.getElementById("contact-list").innerHTML = items.join("");
   document.getElementById("contact-whatsapp-link").addEventListener("click", () => registrarClicWhatsapp("ContactoInfo"));
@@ -210,10 +386,10 @@ function renderizarFooter(personal, contacto) {
 
   const socialItems = [];
   if (contacto.linkedin) {
-    socialItems.push(`<li><a href="${contacto.linkedin}" target="_blank" rel="noopener">LinkedIn</a></li>`);
+    socialItems.push(`<li><a href="${contacto.linkedin}" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>`);
   }
   if (contacto.github) {
-    socialItems.push(`<li><a href="${contacto.github}" target="_blank" rel="noopener">GitHub</a></li>`);
+    socialItems.push(`<li><a href="${contacto.github}" target="_blank" rel="noopener noreferrer">GitHub</a></li>`);
   }
   document.getElementById("footer-social").innerHTML = socialItems.join("");
 

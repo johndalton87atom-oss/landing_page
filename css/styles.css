@@ -500,6 +500,50 @@ p:last-child { margin-bottom: 0; }
 
 .contact__list a:hover { color: var(--color-primario); }
 
+/* Solo el <li> de la dirección pasa a columna, para poder colocar el mapa
+   justo debajo sin afectar al resto de elementos de la lista de contacto. */
+.contact__list li.contact__list-item--direccion {
+  flex-direction: column;
+  width: 100%;
+  gap: 10px;
+}
+
+/* Mapa pequeño y responsive bajo la dirección: todo el bloque es un único
+   enlace que abre la ficha de Google Maps en una pestaña nueva (el iframe
+   es solo visual, "pointer-events: none" deja pasar el clic al enlace). */
+.contact__map {
+  position: relative;
+  display: block;
+  width: 100%;
+  max-width: 300px;
+  border-radius: var(--radio-borde);
+  overflow: hidden;
+  box-shadow: var(--sombra);
+  transition: transform var(--transicion);
+}
+
+.contact__map:hover { transform: translateY(-2px); }
+
+.contact__map iframe {
+  display: block;
+  width: 100%;
+  height: 160px;
+  border: 0;
+  pointer-events: none;
+}
+
+.contact__map-label {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  background-color: var(--color-primario);
+  color: #fff;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 999px;
+}
+
 .contact__horario {
   margin-bottom: 32px;
 }

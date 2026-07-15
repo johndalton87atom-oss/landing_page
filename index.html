@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es-ES">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -30,29 +30,50 @@
   ========================================================================== -->
   <title>Preparación de Oposiciones de Física y Química en Galicia | Academia Premir</title>
   <meta name="description" content="Preparación de oposiciones de Física y Química en Galicia: problemas, temas, unidades didácticas y programación. Clases presenciales, online y en diferido desde la Academia Premir (Lugo)." />
-  <meta name="author" content="J. Higinio" />
+  <meta name="author" content="J. Higinio Rodríguez" />
   <meta name="robots" content="index, follow" />
 
   <!-- ==========================================================================
-       OPEN GRAPH — Vista previa al compartir el enlace en WhatsApp, Facebook,
-       LinkedIn, Twitter/X, etc.
+       URL CANÓNICA
+       ==========================================================================
+       IMPORTANTE: si en el futuro cambias a un dominio propio, actualiza esta
+       URL Y también la etiqueta "og:url" y "twitter:url" de aquí abajo (son
+       las 3 únicas líneas de este archivo con la URL completa del sitio).
+  ========================================================================== -->
+  <link rel="canonical" href="https://jh-fyq.vercel.app/" />
+
+  <!-- ==========================================================================
+       OPEN GRAPH — Vista previa al compartir el enlace en WhatsApp, Telegram,
+       Facebook, LinkedIn y X (Twitter).
        ==========================================================================
        - "og:title" y "og:description": cambia el texto por el tuyo.
-       - "og:image": debe apuntar a una imagen de 1200x630 px. Ahora mismo
-         apunta a un SVG de ejemplo (assets/images/og-image.svg). Para que
-         se vea bien en TODAS las redes sociales (algunas no admiten SVG),
-         sustitúyelo por una imagen JPG o PNG real de 1200x630 px y cambia
-         la ruta de abajo, por ejemplo a "assets/images/og-image.jpg".
-       - "og:url": pon aquí la URL final de tu web una vez la despliegues en
-         Vercel (ej. https://tu-proyecto.vercel.app/).
+       - "og:image": debe apuntar a una imagen de 1200x630 px en formato JPG o
+         PNG (algunas redes como Facebook, LinkedIn o Telegram no muestran
+         bien las imágenes en SVG). Ya apunta a "og-image.png". Si la
+         sustituyes, actualiza también "og:image:width/height" si cambias el
+         tamaño de la imagen.
+       - "og:url" / "twitter:url": deben usar la MISMA URL que la etiqueta
+         "canonical" de arriba.
   ========================================================================== -->
   <meta property="og:type" content="website" />
   <meta property="og:title" content="Preparación de Oposiciones de Física y Química en Galicia | Academia Premir" />
   <meta property="og:description" content="Problemas, temas, unidades didácticas y programación con seguimiento totalmente personalizado. Presencial, online y en diferido." />
-  <meta property="og:image" content="assets/images/og-image.svg" />
-  <meta property="og:url" content="https://tu-proyecto.vercel.app/" />
+  <meta property="og:image" content="https://jh-fyq.vercel.app/assets/images/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:type" content="image/png" />
+  <meta property="og:image:alt" content="Preparación de oposiciones de Física y Química - Academia Premir, Lugo" />
+  <meta property="og:url" content="https://jh-fyq.vercel.app/" />
+  <meta property="og:site_name" content="Academia Premir" />
   <meta property="og:locale" content="es_ES" />
+
+  <!-- Twitter/X: si no se indican estas etiquetas, X recurre a las "og:*" de
+       arriba, pero indicarlas explícitamente evita fallos de vista previa. -->
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Preparación de Oposiciones de Física y Química en Galicia | Academia Premir" />
+  <meta name="twitter:description" content="Problemas, temas, unidades didácticas y programación con seguimiento totalmente personalizado. Presencial, online y en diferido." />
+  <meta name="twitter:image" content="https://jh-fyq.vercel.app/assets/images/og-image.png" />
+  <meta name="twitter:url" content="https://jh-fyq.vercel.app/" />
 
   <!-- ==========================================================================
        FAVICON — icono que aparece en la pestaña del navegador.
@@ -104,7 +125,7 @@
         <p id="hero-credenciales" class="hero__credenciales"></p>
         <div class="hero__botones">
           <a href="#contacto" id="hero-boton-principal" class="btn btn--primary"></a>
-          <a href="#" id="hero-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener"></a>
+          <a href="#" id="hero-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener noreferrer"></a>
         </div>
       </div>
     </section>
@@ -180,7 +201,7 @@
         </div>
         <div class="contact__botones">
           <a href="#" id="contact-boton-email" class="btn btn--primary"></a>
-          <a href="#" id="contact-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener"></a>
+          <a href="#" id="contact-boton-whatsapp" class="btn btn--secondary" target="_blank" rel="noopener noreferrer"></a>
         </div>
       </div>
     </section>

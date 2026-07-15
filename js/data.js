@@ -23,8 +23,9 @@ const siteData = {
   // 1. DATOS PERSONALES
   // ==========================================================================
   personal: {
-    // ESCRIBE AQUÍ TU NOMBRE (se usa en el menú, en "Sobre mí" y en el footer)
-    nombre: "J. Higinio",
+    // ESCRIBE AQUÍ TU NOMBRE (se usa en el menú, en "Sobre mí", en el footer
+    // y en los datos estructurados Schema.org del preparador)
+    nombre: "J. Higinio Rodríguez",
 
     // RUTA DE TU FOTO DE PERFIL (sección "Sobre mí")
     // Sustituye el archivo por tu propia foto (formato JPG o PNG, cuadrada,
@@ -281,6 +282,20 @@ const siteData = {
 
     // ESCRIBE AQUÍ LA DIRECCIÓN COMPLETA
     direccion: "Rúa do Conde 46, 27003 Lugo",
+
+    // ENLACE A LA UBICACIÓN EN GOOGLE MAPS (la dirección de arriba y el mapa
+    // pequeño de la sección de contacto abren esta URL al pulsarlos).
+    // Cómo conseguirlo: busca tu negocio en Google Maps, pulsa "Compartir"
+    // y copia el enlace. Déjalo como "" si no quieres que la dirección sea un enlace.
+    googleMapsUrl: "https://maps.app.goo.gl/3c2wmRD9JU8op1Wj9",
+
+    // COORDENADAS EXACTAS (latitud y longitud) usadas para dibujar el mapa
+    // pequeño de la sección de contacto y para los datos estructurados SEO.
+    // Cómo conseguirlas: abre tu ubicación en Google Maps, haz clic derecho
+    // sobre el punto exacto del mapa y copia las coordenadas (aparecen arriba
+    // del menú, en formato "43.017069, -7.557526").
+    mapaLat: 43.017069,
+    mapaLng: -7.557526,
 
     // ESCRIBE AQUÍ EL EMAIL DE CONTACTO DE LA ACADEMIA
     email: "premir.lugo@premir.es",
