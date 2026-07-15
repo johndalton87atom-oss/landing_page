@@ -188,6 +188,18 @@ function registrarClicWhatsapp(origen) {
   }
 }
 
+/* ==========================================================================
+   GOOGLE ANALYTICS — evento "map_click"
+   ==========================================================================
+   Registra un evento cada vez que se pulsa el enlace de la dirección o el
+   mapa embebido de la sección de contacto (ambos abren Google Maps).
+   ========================================================================== */
+function registrarClicMapa() {
+  if (typeof gtag === "function") {
+    gtag("event", "map_click", { event_label: "Academia Premir Lugo" });
+  }
+}
+
 /* ============================== COLORES ============================== */
 function aplicarColores(colores) {
   const raiz = document.documentElement;
@@ -328,7 +340,7 @@ function renderizarContacto(contacto) {
   document.getElementById("contact-academia").textContent = `La preparación se realiza desde la ${contacto.academia}.`;
 
   const direccionHTML = contacto.googleMapsUrl
-    ? `<a href="${contacto.googleMapsUrl}" target="_blank" rel="noopener noreferrer">${contacto.direccion}</a>`
+    ? `<a href="${contacto.googleMapsUrl}" target="_blank" rel="noopener noreferrer" id="contact-direccion-link">${contacto.direccion}</a>`
     : contacto.direccion;
 
   // Mapa pequeño y responsive, embebido sin necesidad de clave de API de
@@ -340,6 +352,7 @@ function renderizarContacto(contacto) {
       ? `
       <a
         class="contact__map"
+        id="contact-map-link"
         href="${contacto.googleMapsUrl}"
         target="_blank"
         rel="noopener noreferrer"
@@ -365,6 +378,8 @@ function renderizarContacto(contacto) {
   ];
   document.getElementById("contact-list").innerHTML = items.join("");
   document.getElementById("contact-whatsapp-link").addEventListener("click", () => registrarClicWhatsapp("ContactoInfo"));
+  document.getElementById("contact-direccion-link")?.addEventListener("click", () => registrarClicMapa());
+  document.getElementById("contact-map-link")?.addEventListener("click", () => registrarClicMapa());
 
   document.getElementById("contact-horario").innerHTML = contacto.horario
     .map((linea) => `<li>${linea}</li>`)
