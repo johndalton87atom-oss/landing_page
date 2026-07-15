@@ -17,7 +17,7 @@
 // URL PÚBLICA DEL SITIO — se usa para los datos estructurados (Schema.org).
 // Si cambias de dominio, actualiza esta constante Y las etiquetas
 // "canonical" / "og:url" / "twitter:url" de index.html (mismo valor en las 4).
-const URL_SITIO = "https://jh-fyq.vercel.app";
+const URL_SITIO = "https://jhiginio-opos-fyq.es";
 
 document.addEventListener("DOMContentLoaded", () => {
   aplicarColores(siteData.colores);
