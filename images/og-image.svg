@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <!-- IMAGEN PARA REDES SOCIALES (OPEN GRAPH) — PLACEHOLDER -->
+  <!-- Sustituye este archivo por una imagen real (JPG o PNG, 1200x630 px) -->
+  <!-- y actualiza la ruta en el <meta property="og:image"> de index.html -->
+  <rect width="1200" height="630" fill="#2563eb" />
+  <text x="600" y="290" font-family="Poppins, Segoe UI, sans-serif" font-size="52" font-weight="700" fill="#ffffff" text-anchor="middle">Oposiciones de Física y Química</text>
+  <text x="600" y="360" font-family="Inter, Segoe UI, sans-serif" font-size="30" fill="#dbeafe" text-anchor="middle">Academia Premir · Lugo</text>
+</svg>

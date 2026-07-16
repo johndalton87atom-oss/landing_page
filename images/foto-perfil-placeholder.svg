@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+  <!-- FOTO DE PERFIL PLACEHOLDER: sustituye este archivo por tu foto real -->
+  <!-- (ver instrucciones en README.md, sección "Cómo cambiar las imágenes") -->
+  <rect width="500" height="500" fill="#e2e8f0" />
+  <circle cx="250" cy="190" r="90" fill="#94a3b8" />
+  <path d="M90 460c10-110 100-170 160-170s150 60 160 170z" fill="#94a3b8" />
+</svg>
